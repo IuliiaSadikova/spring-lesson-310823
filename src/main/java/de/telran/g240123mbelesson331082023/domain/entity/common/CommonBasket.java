@@ -1,9 +1,12 @@
-package de.telran.g240123mbelesson331082023.domain.entity;
+package de.telran.g240123mbelesson331082023.domain.entity.common;
+
+import de.telran.g240123mbelesson331082023.domain.entity.Basket;
+import de.telran.g240123mbelesson331082023.domain.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonBasket implements Basket{
+public class CommonBasket implements Basket {
 
     private List<Product> products = new ArrayList<>();
 

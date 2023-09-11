@@ -1,19 +1,22 @@
-package de.telran.g240123mbelesson331082023.service;
+package de.telran.g240123mbelesson331082023.service.common;
 
 import de.telran.g240123mbelesson331082023.domain.entity.Basket;
 import de.telran.g240123mbelesson331082023.domain.entity.Client;
 import de.telran.g240123mbelesson331082023.domain.entity.Product;
 import de.telran.g240123mbelesson331082023.repository.ClientRepository;
+import de.telran.g240123mbelesson331082023.repository.mysql.MySqlClientRepository;
+import de.telran.g240123mbelesson331082023.service.ClientService;
+import de.telran.g240123mbelesson331082023.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CommonClientService implements ClientService{
+public class CommonClientService implements ClientService {
 
     @Autowired
-    private ClientRepository repository;
+    private MySqlClientRepository repository;
 
     @Autowired
     private ProductService productService;
@@ -41,7 +44,10 @@ public class CommonClientService implements ClientService{
 
     @Override
     public void deleteByName(String name) {
-        int idToDelete = repository.getAll().stream().filter(x -> x.getName().equals(name)).findFirst().get().getId();
+        int idToDelete = repository.getAll().stream()
+                .filter(x -> x.getName().equals(name))
+                .findFirst().get()
+                .getId();
         repository.delete(idToDelete);
     }
 

@@ -1,12 +1,14 @@
 package de.telran.g240123mbelesson331082023.domain.database;
 
 import de.telran.g240123mbelesson331082023.domain.entity.*;
+import de.telran.g240123mbelesson331082023.domain.entity.common.CommonBasket;
+import de.telran.g240123mbelesson331082023.domain.entity.common.CommonClient;
+import de.telran.g240123mbelesson331082023.domain.entity.common.CommonProduct;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CommonDataBase implements DataBase{

@@ -1,8 +1,9 @@
 package de.telran.g240123mbelesson331082023.controllers;
 
 import de.telran.g240123mbelesson331082023.domain.entity.Client;
-import de.telran.g240123mbelesson331082023.domain.entity.CommonClient;
+import de.telran.g240123mbelesson331082023.domain.entity.common.CommonClient;
 import de.telran.g240123mbelesson331082023.service.ClientService;
+import de.telran.g240123mbelesson331082023.service.jpa.JpaClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class ClientController {
 
     @Autowired
-    private ClientService service;
+    private JpaClientService service;
 
     @GetMapping
     List<Client> getAll() {
@@ -55,12 +56,12 @@ public class ClientController {
         return service.getAveragePriceById(clientId);
     }
 
-    @PostMapping("/{clientId}/cart/{productId}")
+    @PostMapping("/{clientId}/cart/product/{productId}")
     public void addToCartById(@PathVariable int clientId, @PathVariable int productId) {
         service.addToCartById(clientId, productId);
     }
 
-    @DeleteMapping("/{clientId}/cart/{productId}")
+    @DeleteMapping("/{clientId}/cart/product/{productId}")
     public void deleteFromCart(@PathVariable int clientId, @PathVariable int productId) {
         service.deleteFromCart(clientId, productId);
     }

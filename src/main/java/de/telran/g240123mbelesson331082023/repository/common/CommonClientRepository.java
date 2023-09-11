@@ -1,23 +1,23 @@
-package de.telran.g240123mbelesson331082023.repository;
+package de.telran.g240123mbelesson331082023.repository.common;
 
 import de.telran.g240123mbelesson331082023.domain.database.DataBase;
 import de.telran.g240123mbelesson331082023.domain.entity.Client;
 import de.telran.g240123mbelesson331082023.domain.entity.Product;
+import de.telran.g240123mbelesson331082023.repository.ClientRepository;
+import de.telran.g240123mbelesson331082023.repository.mysql.MySqlProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 
 @Repository
-public class CommonClientRepository implements ClientRepository{
+public class CommonClientRepository implements ClientRepository {
     @Autowired
     private DataBase dataBase;
 
     @Autowired
-    private ProductRepository productRepository;
+    private MySqlProductRepository productRepository;
 
     @Override
     public List<Client> getAll() {

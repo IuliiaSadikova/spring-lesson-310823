@@ -1,17 +1,18 @@
-package de.telran.g240123mbelesson331082023.repository;
+package de.telran.g240123mbelesson331082023.repository.common;
 
 import de.telran.g240123mbelesson331082023.domain.database.DataBase;
 import de.telran.g240123mbelesson331082023.domain.entity.Product;
+import de.telran.g240123mbelesson331082023.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.List;
 
-@Repository
+
 public class CommonProductRepository implements ProductRepository {
 
-    @Autowired
+    //@Autowired
     private DataBase dataBase;
 
     @Override
