@@ -1,12 +1,16 @@
 package de.telran.g240123mbelesson331082023.service.jpa;
 
+import de.telran.g240123mbelesson331082023.domain.entity.Basket;
 import de.telran.g240123mbelesson331082023.domain.entity.Client;
+import de.telran.g240123mbelesson331082023.domain.entity.Product;
 import de.telran.g240123mbelesson331082023.domain.entity.jpa.JpaBasket;
 import de.telran.g240123mbelesson331082023.domain.entity.jpa.JpaClient;
+import de.telran.g240123mbelesson331082023.domain.entity.jpa.JpaProduct;
 import de.telran.g240123mbelesson331082023.repository.jpa.JpaBasketRepository;
 import de.telran.g240123mbelesson331082023.repository.jpa.JpaClientRepository;
 import de.telran.g240123mbelesson331082023.repository.jpa.JpaProductRepository;
 import de.telran.g240123mbelesson331082023.service.ClientService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JpaClientService implements ClientService {
@@ -56,9 +61,15 @@ public class JpaClientService implements ClientService {
         clientRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void deleteByName(String name) {
-        clientRepository.deleteByName(name);
+        clientRepository.findJpaClientByName(name).ifPresent(client -> {
+            JpaBasket basket = (JpaBasket) client.getBasket();
+            basketRepository.delete(basket);
+            clientRepository.delete(client);
+        });
+
     }
 
     @Override
@@ -88,20 +99,25 @@ public class JpaClientService implements ClientService {
 
     @Override
     public void deleteFromCart(int customerId, int productId) {
-        productRepository.findById(productId)
-                .ifPresent(product -> clientRepository.findById(customerId)
-                        .ifPresent(client -> {
-                            client.getBasket().getProducts().remove(product);
-                            clientRepository.save(client);
-                        }));
+        clientRepository.findById(customerId)
+                .ifPresent(client -> {
+                    JpaBasket basket = (JpaBasket) client.getBasket();
+                    List<JpaProduct> products = basket.getProducts().stream()
+                            .map(p -> (JpaProduct) p)
+                            .filter(p -> p.getId() != productId)
+                            .toList();
+                    basket.setProducts(new ArrayList<>(products));
+                    basketRepository.save(basket);
+                });
     }
 
     @Override
     public void clearCart(int customerId) {
         clientRepository.findById(customerId)
                 .ifPresent(client -> {
-                    client.getBasket().getProducts().clear();
-                    clientRepository.save(client);
+                    JpaBasket basket = (JpaBasket) client.getBasket();
+                    basket.setProducts(new ArrayList<>());
+                    basketRepository.save(basket);
                 });
     }
 }

@@ -24,6 +24,10 @@ public class JpaBasket implements Basket {
     @JoinColumn(name = "customer_id")
     private JpaClient client;
 
+    public void setProducts(List<JpaProduct> products) {
+        this.products = products;
+    }
+
     @ManyToMany
     @JoinTable(
             name = "cart_product",

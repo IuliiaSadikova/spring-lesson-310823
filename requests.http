@@ -67,3 +67,6 @@ POST http://localhost:8080/client/7/cart/product/4
 
 ### delete product by id from card by id
 DELETE http://localhost:8080/client/7/cart/product/3
+
+### clear cart by client id
+DELETE http://localhost:8080/client/7/cart

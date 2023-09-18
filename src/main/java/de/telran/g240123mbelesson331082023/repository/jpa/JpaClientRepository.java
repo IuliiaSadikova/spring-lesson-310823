@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface JpaClientRepository extends JpaRepository<JpaClient, Integer> {
 
-    @Transactional
-    void deleteByName(String name);
+    Optional<JpaClient> findJpaClientByName(String name);
 
     @Query(value = "SELECT sum(p.price) as total_price FROM customer as c " +
             "left join cart_product as cp on c.id = cp.cart_id " +
