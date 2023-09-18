@@ -4,6 +4,8 @@ import de.telran.g240123mbelesson331082023.domain.entity.Product;
 import de.telran.g240123mbelesson331082023.domain.entity.jpa.JpaProduct;
 import de.telran.g240123mbelesson331082023.repository.jpa.JpaProductRepository;
 import de.telran.g240123mbelesson331082023.service.ProductService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class JpaProductService implements ProductService {
+
+    private static final Logger LOGGER = LogManager.getLogger(JpaProductService.class);
+
     @Autowired
     private JpaProductRepository repository;
 
@@ -21,12 +26,20 @@ public class JpaProductService implements ProductService {
 
     @Override
     public Product getById(int id) {
-        return repository.findById(id).orElse(null);
+//        LOGGER.log(Level.INFO, String.format("INFO запрошен продукт с id %d.", id));
+//        LOGGER.log(Level.WARN, String.format("WARN запрошен продукт с id %d.", id));
+//        LOGGER.log(Level.ERROR, String.format("ERROR запрошен продукт с id %d.", id));
+
+//        LOGGER.info(String.format("INFO запрошен продукт с id %d.", id));
+//        LOGGER.warn(String.format("WARN запрошен продукт с id %d.", id));
+//        LOGGER.error(String.format("ERROR запрошен продукт с id %d.", id));
+
+        return repository.findById(id).get();  //orElse(null);
     }
 
     @Override
-    public void add(Product product) {
-        repository.save(new JpaProduct(0, product.getName(), product.getPrice()));
+    public Product add(Product product) {
+        return repository.save(new JpaProduct(0, product.getName(), product.getPrice()));
     }
 
     @Override
@@ -53,4 +66,9 @@ public class JpaProductService implements ProductService {
     public double getAveragePrice() {
         return repository.getAveragePrice();
     }
+
+//    public void test(JpaProduct product) {
+//        product.setName("New name");
+//    }
+
 }

@@ -4,7 +4,6 @@ import de.telran.g240123mbelesson331082023.domain.entity.Product;
 import de.telran.g240123mbelesson331082023.repository.ProductRepository;
 import de.telran.g240123mbelesson331082023.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -25,8 +24,9 @@ public class CommonProductService implements ProductService {
     }
 
     @Override
-    public void add(Product product) {
+    public Product add(Product product) {
         repository.add(product.getName(), product.getPrice());
+        return product;
     }
 
     @Override

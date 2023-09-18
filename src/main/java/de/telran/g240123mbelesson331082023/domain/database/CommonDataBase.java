@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CommonDataBase implements DataBase{
@@ -24,9 +25,9 @@ public class CommonDataBase implements DataBase{
         products.add(new CommonProduct(3, "Butter", 2.3));
         products.add(new CommonProduct(4, "Cheese", 3.5));
         products.add(new CommonProduct(5, "Eggs", 2.9));
-        clients.add(new CommonClient(1, "John", new CommonBasket()));
-        clients.add(new CommonClient(2, "Paul", new CommonBasket()));
-        clients.add(new CommonClient(3, "Anna", new CommonBasket()));
+//        clients.add(new CommonClient(1, "John", new CommonBasket()));
+//        clients.add(new CommonClient(2, "Paul", new CommonBasket()));
+//        clients.add(new CommonClient(3, "Anna", new CommonBasket()));
     }
 
     @Override
@@ -40,7 +41,7 @@ public class CommonDataBase implements DataBase{
         String[] parts = query.split(" ");
         if (parts[0].equals("Add")) {
             if (parts[2].equals("client")) {
-                clients.add(new CommonClient(++idClientCounter, parts[5], new CommonBasket()));
+                clients.add(new CommonClient(++idClientCounter, parts[5], new CommonBasket(), 1980));
             }
             if (parts[2].equals("product")) {
                 products.add(new CommonProduct(++idProductCounter, parts[5], Double.parseDouble(parts[8])));
@@ -49,7 +50,7 @@ public class CommonDataBase implements DataBase{
         if (parts[0].equals("Delete")) {
             if (parts[1].equals("client")) {
                 clients.removeIf(x -> x.getId() == Integer.parseInt(parts[5]));
-                //Optional<Client> optional = clients.stream().filter(x -> x.getId() == Integer.parseInt(parts[5])).findFirst();
+                Optional<Client> optional = clients.stream().filter(x -> x.getId() == Integer.parseInt(parts[5])).findFirst();
             }
             if (parts[1].equals("product")) {
                 products.removeIf(x -> x.getId() == Integer.parseInt(parts[5]));

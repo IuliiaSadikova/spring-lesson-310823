@@ -2,6 +2,8 @@ package de.telran.g240123mbelesson331082023.controllers;
 
 import de.telran.g240123mbelesson331082023.domain.entity.Client;
 import de.telran.g240123mbelesson331082023.domain.entity.common.CommonClient;
+import de.telran.g240123mbelesson331082023.domain.entity.jpa.JpaClient;
+import de.telran.g240123mbelesson331082023.exception_layer.exceptions.EntityValidationException;
 import de.telran.g240123mbelesson331082023.service.ClientService;
 import de.telran.g240123mbelesson331082023.service.jpa.JpaClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/client")
-public class ClientController {
+public class ClientController implements Controller{
 
     @Autowired
     private JpaClientService service;
@@ -26,9 +28,19 @@ public class ClientController {
         return service.getById(clientId);
     }
 
+    @GetMapping("/{clientId}/age")
+    public int getAgeById(@PathVariable int clientId) {
+        return service.getAgeById(clientId);
+    }
+
     @PostMapping
-    public void addClient(@RequestBody CommonClient client) {
-        service.add(client);
+    public Client addClient(@RequestBody JpaClient client) {
+        try {
+            service.add(client);
+            return client;
+        } catch (Exception e) {
+            throw new EntityValidationException(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{clientId}")

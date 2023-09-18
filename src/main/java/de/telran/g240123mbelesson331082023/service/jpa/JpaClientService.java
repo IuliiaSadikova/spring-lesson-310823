@@ -7,6 +7,8 @@ import de.telran.g240123mbelesson331082023.repository.jpa.JpaBasketRepository;
 import de.telran.g240123mbelesson331082023.repository.jpa.JpaClientRepository;
 import de.telran.g240123mbelesson331082023.repository.jpa.JpaProductRepository;
 import de.telran.g240123mbelesson331082023.service.ClientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ import java.util.List;
 
 @Service
 public class JpaClientService implements ClientService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpaClientService.class);
+
     @Autowired
     private JpaClientRepository clientRepository;
     @Autowired
@@ -29,13 +34,21 @@ public class JpaClientService implements ClientService {
 
     @Override
     public Client getById(int id) {
+//        LOGGER.info(String.format("INFO запрошен клиент с id %d.", id));
+//        LOGGER.warn(String.format("WARN запрошен клиент с id %d.", id));
+//        LOGGER.error(String.format("ERROR запрошен клиент с id %d.", id));
         return clientRepository.findById(id).orElse(null);
+    }
+
+    public int getAgeById(int id) {
+        return clientRepository.findById(id).get().getAge();
     }
 
     @Override
     public void add(Client client) {
-        JpaBasket basket = basketRepository.save(new JpaBasket());
-        clientRepository.save(new JpaClient(0, client.getName(), basket));
+        JpaClient newClient = clientRepository.save(new JpaClient(0, client.getName(), client.getAge()));
+        basketRepository.save(new JpaBasket(newClient));
+
     }
 
     @Override
@@ -50,7 +63,7 @@ public class JpaClientService implements ClientService {
 
     @Override
     public int getCount() {
-        return clientRepository.findAll().size();
+        return (int) clientRepository.count();
     }
 
     @Override

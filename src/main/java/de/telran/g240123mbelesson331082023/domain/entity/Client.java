@@ -4,6 +4,7 @@ public interface Client {
 
     int getId();
     String getName();
+    int getAge();
     Basket getBasket();
 
 }

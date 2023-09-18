@@ -1,0 +1,69 @@
+### get all products
+GET http://localhost:8080/product
+
+### get product by id
+GET http://localhost:8080/product/25
+
+### add product
+POST http://localhost:8080/product
+Content-Type: application/json
+
+{
+  "name": "Strawberry",
+  "price": 200.0
+}
+
+### delete product by id
+DELETE http://localhost:8080/product/14
+
+### delete product by name
+DELETE http://localhost:8080/product?name=Strawberry
+
+### get total count of products
+GET http://localhost:8080/product/count
+
+### get total price of products
+GET http://localhost:8080/product/total-price
+
+### get average price of products
+GET http://localhost:8080/product/avg-price
+
+### get all cients
+GET http://localhost:8080/client
+
+### get client by id
+GET http://localhost:8080/client/7
+
+### get age by client id
+GET http://localhost:8080/client/1/age
+
+### add client
+POST http://localhost:8080/client
+Content-Type: application/json
+
+{
+  "name": "Pablo",
+  "age": 1987,
+  "email": "pablo@pb.com"
+}
+
+### delete client by id
+DELETE http://localhost:8080/client/
+
+### delete client by name
+DELETE http://localhost:8080/client?name=Pablo
+
+### get count of clients
+GET http://localhost:8080/client/count
+
+### get total price by id
+GET http://localhost:8080/client/1/cart/total-price
+
+### get average price by id
+GET http://localhost:8080/client/2/cart/avg-price
+
+### add product by id to cart by id
+POST http://localhost:8080/client/7/cart/product/4
+
+### delete product by id from card by id
+DELETE http://localhost:8080/client/7/cart/product/3

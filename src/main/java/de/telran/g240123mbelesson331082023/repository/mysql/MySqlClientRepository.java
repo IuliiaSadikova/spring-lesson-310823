@@ -64,7 +64,7 @@ public class MySqlClientRepository implements ClientRepository {
             while (resultSet.next()) {
                 if (client == null) {
                     String name = resultSet.getString("c.name");
-                    client = new CommonClient(id, name, new CommonBasket());
+                  //  client = new CommonClient(id, name, new CommonBasket());
                 }
                 int productId = resultSet.getInt("product_id");
                 String productName = resultSet.getString("p.name");

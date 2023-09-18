@@ -7,10 +7,12 @@ import lombok.*;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class CommonClient implements Client {
 
     private int id;
     private String name;
     private Basket basket;
+    private int age;
 
 }
