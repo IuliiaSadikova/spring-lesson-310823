@@ -10,6 +10,7 @@ public interface JpaProductRepository extends JpaRepository<JpaProduct, Integer>
     @Transactional
     void deleteByName(String name);
 
+
     @Query(value = "SELECT sum(price) from product", nativeQuery = true)
     double getTotalPrice();
 

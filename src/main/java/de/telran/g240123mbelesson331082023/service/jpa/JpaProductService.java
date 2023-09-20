@@ -2,7 +2,10 @@ package de.telran.g240123mbelesson331082023.service.jpa;
 
 import de.telran.g240123mbelesson331082023.domain.entity.Product;
 import de.telran.g240123mbelesson331082023.domain.entity.jpa.JpaProduct;
+import de.telran.g240123mbelesson331082023.domain.entity.jpa.Task;
 import de.telran.g240123mbelesson331082023.repository.jpa.JpaProductRepository;
+import de.telran.g240123mbelesson331082023.repository.jpa.JpaTaskRepository;
+import de.telran.g240123mbelesson331082023.schedule_layer.ScheduleExecutor;
 import de.telran.g240123mbelesson331082023.service.ProductService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,8 +22,16 @@ public class JpaProductService implements ProductService {
     @Autowired
     private JpaProductRepository repository;
 
+    @Autowired
+    private JpaTaskRepository taskRepository;
+
     @Override
     public List<Product> getAll() {
+//        Task task = new Task("Task scheduled after getting all products");
+        Task task = new Task("Task scheduled for single execution after getting all products");
+        taskRepository.save(task);
+//        ScheduleExecutor.taskSchedulerTaskWithTrigger(task);
+        ScheduleExecutor.taskSchedulerTaskWithInstant(task);
         return new ArrayList<>(repository.findAll());
     }
 
@@ -33,6 +44,7 @@ public class JpaProductService implements ProductService {
 //        LOGGER.info(String.format("INFO запрошен продукт с id %d.", id));
 //        LOGGER.warn(String.format("WARN запрошен продукт с id %d.", id));
 //        LOGGER.error(String.format("ERROR запрошен продукт с id %d.", id));
+
 
         return repository.findById(id).get();  //orElse(null);
     }
